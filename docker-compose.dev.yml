@@ -17,6 +17,8 @@ services:
 
   php:
     build:
+      context: .
+      dockerfile: docker/php/Dockerfile
       target: development
       args:
         USER_ID: ${SPIN_USER_ID}
@@ -39,7 +41,7 @@ services:
   node:
     build:
       context: .
-      dockerfile: docker-node.Dockerfile
+      dockerfile: docker/node/Dockerfile
       args:
         USER_ID: ${SPIN_USER_ID}
     networks:
