@@ -1,0 +1,88 @@
+services:
+  traefik:
+    networks:
+      development:
+        aliases:
+          - jetstream-react-app.dev.test
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5173:5173"
+    volumes:
+      # Add Docker as a mounted volume, so that Traefik can read the labels of other services
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./.infrastructure/conf/traefik/dev/traefik.yml:/traefik.yml:ro
+      - ./.infrastructure/conf/traefik/dev/traefik-certs.yml:/traefik-certs.yml
+      - ./.infrastructure/conf/traefik/dev/certificates/:/certificates
+
+  php:
+    build:
+      target: development
+      args:
+        USER_ID: ${SPIN_USER_ID}
+        GROUP_ID: ${SPIN_GROUP_ID}
+    volumes:
+      - .:/var/www/html/
+    networks:
+      - development
+    depends_on:
+      - traefik
+      - mariadb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.laravel.rule=HostRegexp(`jetstream-react-app.dev.test`)"
+      - "traefik.http.routers.laravel.entrypoints=websecure"
+      - "traefik.http.routers.laravel.tls=true"
+      - "traefik.http.services.laravel.loadbalancer.server.port=8080"
+      - "traefik.http.services.laravel.loadbalancer.server.scheme=http"
+
+  node:
+    build:
+      context: .
+      dockerfile: docker-node.Dockerfile
+      args:
+        USER_ID: ${SPIN_USER_ID}
+    networks:
+      - development
+    environment:
+      VITE_HOST: "vite.dev.test"
+    volumes:
+      - .:/usr/src/app/:cached
+    working_dir: /usr/src/app/
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vite.rule=HostRegexp(`vite.dev.test`)"
+      - "traefik.http.routers.vite.entrypoints=websecure"
+      - "traefik.http.routers.vite.tls=true"
+      - "traefik.http.services.vite.loadbalancer.server.port=5173"
+      - "traefik.http.services.vite.loadbalancer.server.scheme=https"
+
+  mariadb:
+    networks:
+      - development
+    volumes:
+      - ./.infrastructure/volume_data/mariadb/database_data/:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: "rootpassword"
+        MYSQL_DATABASE: "laravel"
+        MYSQL_USER: "mysqluser"
+        MYSQL_PASSWORD: "mysqlpassword"
+    ports:
+      - "3306:3306"
+
+  mailpit:
+      image: axllent/mailpit
+      networks:
+        - development
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.mailpit.rule=Host(`mailpit.dev.test`)"
+        - "traefik.http.routers.mailpit.entrypoints=websecure"
+        - "traefik.http.routers.mailpit.tls=true"
+        - "traefik.http.services.mailpit.loadbalancer.server.port=8025"
+        - "traefik.http.services.mailpit.loadbalancer.server.scheme=http"
+      depends_on:
+        - traefik
+
+networks:
+  development:
