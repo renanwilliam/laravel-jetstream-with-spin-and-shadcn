@@ -6,10 +6,10 @@ interface Props {
 }
 
 export default function InputError({
-  message,
-  className,
-  children,
-}: PropsWithChildren<Props>) {
+                                     message,
+                                     className,
+                                     children,
+                                   }: PropsWithChildren<Props>) {
   if (!message && !children) {
     return null;
   }

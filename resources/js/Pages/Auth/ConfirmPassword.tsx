@@ -1,12 +1,12 @@
-import { useForm, Head } from '@inertiajs/react';
-import classNames from 'classnames';
+import { Head, useForm } from '@inertiajs/react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/shadcn/ui/card';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
+import { Button } from '@/shadcn/ui/button';
 
 export default function ConfirmPassword() {
   const route = useRoute();
@@ -25,35 +25,39 @@ export default function ConfirmPassword() {
     <AuthenticationCard>
       <Head title="Secure Area" />
 
-      <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        This is a secure area of the application. Please confirm your password
-        before continuing.
-      </div>
-
       <form onSubmit={onSubmit}>
-        <div>
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <TextInput
-            id="password"
-            type="password"
-            className="mt-1 block w-full"
-            value={form.data.password}
-            onChange={e => form.setData('password', e.currentTarget.value)}
-            required
-            autoComplete="current-password"
-            autoFocus
-          />
-          <InputError className="mt-2" message={form.errors.password} />
-        </div>
+        <Card>
+          <CardHeader>
+            <CardDescription>
+              This is a secure area of the application. Please
+              confirm your password before continuing.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="mt-4">
+              <Label htmlFor="password">Password</Label>
 
-        <div className="flex justify-end mt-4">
-          <PrimaryButton
-            className={classNames('ml-4', { 'opacity-25': form.processing })}
-            disabled={form.processing}
-          >
-            Confirm
-          </PrimaryButton>
-        </div>
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                value={form.data.password}
+                className="mt-1 block w-full"
+                required
+                autoComplete="current-password"
+                autoFocus
+                onChange={e => form.setData('password', e.currentTarget.value)}
+              />
+
+              <InputError className="mt-2" message={form.errors.password} />
+            </div>
+          </CardContent>
+          <CardFooter className="flex items-center justify-end mt-4">
+            <Button className="ms-4" disabled={form.processing}>
+              Confirm
+            </Button>
+          </CardFooter>
+        </Card>
       </form>
     </AuthenticationCard>
   );

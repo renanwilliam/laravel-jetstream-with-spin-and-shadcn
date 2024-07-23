@@ -6,9 +6,10 @@ import ActionMessage from '@/Components/ActionMessage';
 import FormSection from '@/Components/FormSection';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import classNames from 'classnames';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
+import { Button } from '@/shadcn/ui/button';
 
 export default function CreateTeamForm() {
   const route = useRoute();
@@ -35,12 +36,12 @@ export default function CreateTeamForm() {
             Saved.
           </ActionMessage>
 
-          <PrimaryButton
+          <Button
             className={classNames({ 'opacity-25': form.processing })}
             disabled={form.processing}
           >
             Save
-          </PrimaryButton>
+          </Button>
         </>
       )}
     >
@@ -66,8 +67,8 @@ export default function CreateTeamForm() {
       </div>
 
       <div className="col-span-6 sm:col-span-4">
-        <InputLabel htmlFor="name" value="Team Name" />
-        <TextInput
+        <Label htmlFor="name">Team Name</Label>
+        <Input
           id="name"
           type="text"
           className="mt-1 block w-full"

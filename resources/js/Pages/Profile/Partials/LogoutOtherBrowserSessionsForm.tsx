@@ -6,10 +6,9 @@ import ActionMessage from '@/Components/ActionMessage';
 import ActionSection from '@/Components/ActionSection';
 import DialogModal from '@/Components/DialogModal';
 import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import SecondaryButton from '@/Components/SecondaryButton';
 import { Session } from '@/types';
+import { Button } from '@/shadcn/ui/button';
+import { Input } from '@/shadcn/ui/input';
 
 interface Props {
   sessions: Session[];
@@ -74,7 +73,8 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
                     stroke="currentColor"
                     className="w-8 h-8 text-gray-500"
                   >
-                    <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    <path
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                   </svg>
                 ) : (
                   <svg
@@ -118,9 +118,9 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
       ) : null}
 
       <div className="flex items-center mt-5">
-        <PrimaryButton onClick={confirmLogout}>
+        <Button onClick={confirmLogout}>
           Log Out Other Browser Sessions
-        </PrimaryButton>
+        </Button>
 
         <ActionMessage on={form.recentlySuccessful} className="ml-3">
           Done.
@@ -133,7 +133,7 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
           Please enter your password to confirm you would like to log out of
           your other browser sessions across all of your devices.
           <div className="mt-4">
-            <TextInput
+            <Input
               type="password"
               className="mt-1 block w-3/4"
               placeholder="Password"
@@ -147,15 +147,15 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
         </DialogModal.Content>
 
         <DialogModal.Footer>
-          <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+          <Button onClick={closeModal} variant="secondary">Cancel</Button>
 
-          <PrimaryButton
+          <Button
             onClick={logoutOtherBrowserSessions}
             className={classNames('ml-2', { 'opacity-25': form.processing })}
             disabled={form.processing}
           >
             Log Out Other Browser Sessions
-          </PrimaryButton>
+          </Button>
         </DialogModal.Footer>
       </DialogModal>
     </ActionSection>

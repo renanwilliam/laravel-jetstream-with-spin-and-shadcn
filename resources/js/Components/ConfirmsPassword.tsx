@@ -4,24 +4,24 @@ import React, { PropsWithChildren, useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import DialogModal from '@/Components/DialogModal';
 import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import SecondaryButton from '@/Components/SecondaryButton';
+import { Input } from '@/shadcn/ui/input';
+import { Button } from '@/shadcn/ui/button';
 
 interface Props {
   title?: string;
   content?: string;
   button?: string;
+
   onConfirm(): void;
 }
 
 export default function ConfirmsPassword({
-  title = 'Confirm Password',
-  content = 'For your security, please confirm your password to continue.',
-  button = 'Confirm',
-  onConfirm,
-  children,
-}: PropsWithChildren<Props>) {
+                                           title = 'Confirm Password',
+                                           content = 'For your security, please confirm your password to continue.',
+                                           button = 'Confirm',
+                                           onConfirm,
+                                           children,
+                                         }: PropsWithChildren<Props>) {
   const route = useRoute();
   const [confirmingPassword, setConfirmingPassword] = useState(false);
   const [form, setForm] = useState({
@@ -78,7 +78,7 @@ export default function ConfirmsPassword({
           {content}
 
           <div className="mt-4">
-            <TextInput
+            <Input
               ref={passwordRef}
               type="password"
               className="mt-1 block w-3/4"
@@ -94,15 +94,15 @@ export default function ConfirmsPassword({
         </DialogModal.Content>
 
         <DialogModal.Footer>
-          <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+          <Button variant="secondary" onClick={closeModal}>Cancel</Button>
 
-          <PrimaryButton
+          <Button
             className={classNames('ml-2', { 'opacity-25': form.processing })}
             onClick={confirmPassword}
             disabled={form.processing}
           >
             {button}
-          </PrimaryButton>
+          </Button>
         </DialogModal.Footer>
       </DialogModal>
     </span>

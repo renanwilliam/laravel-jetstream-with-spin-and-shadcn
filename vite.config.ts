@@ -12,7 +12,7 @@ export default defineConfig({
     host,
     hmr: {
       host,
-      clientPort: 443
+      clientPort: 443,
     },
   },
   plugins: [

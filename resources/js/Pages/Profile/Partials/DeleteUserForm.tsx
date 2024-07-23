@@ -3,11 +3,10 @@ import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import ActionSection from '@/Components/ActionSection';
-import DangerButton from '@/Components/DangerButton';
 import DialogModal from '@/Components/DialogModal';
-import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
-import SecondaryButton from '@/Components/SecondaryButton';
+import { Button } from '@/shadcn/ui/button';
+import { Input } from '@/shadcn/ui/input';
 
 export default function DeleteUserForm() {
   const route = useRoute();
@@ -49,9 +48,9 @@ export default function DeleteUserForm() {
       </div>
 
       <div className="mt-5">
-        <DangerButton onClick={confirmUserDeletion}>
+        <Button onClick={confirmUserDeletion} variant="destructive">
           Delete Account
-        </DangerButton>
+        </Button>
       </div>
 
       {/* <!-- Delete Account Confirmation Modal --> */}
@@ -62,7 +61,7 @@ export default function DeleteUserForm() {
           Please enter your password to confirm you would like to permanently
           delete your account.
           <div className="mt-4">
-            <TextInput
+            <Input
               type="password"
               className="mt-1 block w-3/4"
               placeholder="Password"
@@ -74,15 +73,16 @@ export default function DeleteUserForm() {
           </div>
         </DialogModal.Content>
         <DialogModal.Footer>
-          <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+          <Button onClick={closeModal} variant="secondary">Cancel</Button>
 
-          <DangerButton
+          <Button
+            variant="destructive"
             onClick={deleteUser}
             className={classNames('ml-2', { 'opacity-25': form.processing })}
             disabled={form.processing}
           >
             Delete Account
-          </DangerButton>
+          </Button>
         </DialogModal.Footer>
       </DialogModal>
     </ActionSection>

@@ -3,13 +3,7 @@ import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager';
 import UpdateTeamNameForm from '@/Pages/Teams/Partials/UpdateTeamNameForm';
 import SectionBorder from '@/Components/SectionBorder';
 import AppLayout from '@/Layouts/AppLayout';
-import {
-  JetstreamTeamPermissions,
-  Role,
-  Team,
-  TeamInvitation,
-  User,
-} from '@/types';
+import { JetstreamTeamPermissions, Role, Team, TeamInvitation, User } from '@/types';
 import React from 'react';
 
 interface UserMembership extends User {

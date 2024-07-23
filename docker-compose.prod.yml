@@ -1,35 +1,35 @@
 services:
 
   traefik:
-      networks:
-          - web-public
-      ports:
-        - "80:80"
-        - "443:443"
-      deploy:
-        update_config:
-          parallelism: 1
-          delay: 5s
-          order: stop-first
-        placement:
-          constraints:
-            - node.role==manager
-      volumes:
-        # Add Docker as a mounted volume, so that Traefik can read the labels of other services
-        - /var/run/docker.sock:/var/run/docker.sock:ro
-        - certificates:/certificates
-      configs:
-        - source: traefik
-          target: /etc/traefik/traefik.yml
+    networks:
+      - web-public
+    ports:
+      - "80:80"
+      - "443:443"
+    deploy:
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: stop-first
+      placement:
+        constraints:
+          - node.role==manager
+    volumes:
+      # Add Docker as a mounted volume, so that Traefik can read the labels of other services
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certificates:/certificates
+    configs:
+      - source: traefik
+        target: /etc/traefik/traefik.yml
 
   mariadb:
     networks:
       - web-public
     environment:
-        MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-        MARIADB_DATABASE: "${DB_NAME}"
-        MARIADB_USER: "${DB_USERNAME}"
-        MARIADB_PASSWORD: "${DB_PASSWORD}"
+      MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MARIADB_DATABASE: "${DB_NAME}"
+      MARIADB_USER: "${DB_USERNAME}"
+      MARIADB_PASSWORD: "${DB_PASSWORD}"
     deploy:
       placement:
         constraints:
@@ -40,7 +40,7 @@ services:
       - database_shared:/shared
 
   ssh:
-    # We use an SSH image so we can securely tunnel into the Docker network with 
+    # We use an SSH image so we can securely tunnel into the Docker network with
     # tools like Sequel Pro, TablePlus, Sequel Ace, etc.
     # Learn more how to secure your tunnel here: https://github.com/serversideup/docker-ssh
     image: serversideup/docker-ssh
@@ -49,7 +49,7 @@ services:
         published: 2222
         mode: host
     environment:
-      # Change the keys below to your own keys 
+      # Change the keys below to your own keys
       AUTHORIZED_KEYS: >
         "# Start Keys
          ssh-ed25519 1234567890abcdefghijklmnoqrstuvwxyz user-a
@@ -60,7 +60,7 @@ services:
     volumes:
       - tunnel_ssh_host_keys:/etc/ssh/ssh_host_keys
     networks:
-        - web-public
+      - web-public
 
   php:
     image: ${DEPLOYMENT_IMAGE_PHP} # 👈 Be sure to change this to your own image

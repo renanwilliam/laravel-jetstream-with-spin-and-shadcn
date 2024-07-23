@@ -5,16 +5,17 @@ import ReactDOM from 'react-dom';
 
 export interface ModalProps {
   isOpen: boolean;
-  onClose(): void;
   maxWidth?: string;
+
+  onClose(): void;
 }
 
 export default function Modal({
-  isOpen,
-  onClose,
-  maxWidth = '2xl',
-  children,
-}: PropsWithChildren<ModalProps>) {
+                                isOpen,
+                                onClose,
+                                maxWidth = '2xl',
+                                children,
+                              }: PropsWithChildren<ModalProps>) {
   const maxWidthClass = {
     sm: 'sm:max-w-sm',
     md: 'sm:max-w-md',

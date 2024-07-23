@@ -2,13 +2,13 @@ import useRoute from '@/Hooks/useRoute';
 import ActionMessage from '@/Components/ActionMessage';
 import FormSection from '@/Components/FormSection';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { JetstreamTeamPermissions, Team, User } from '@/types';
 import { useForm } from '@inertiajs/react';
 import classNames from 'classnames';
 import React from 'react';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
+import { Button } from '@/shadcn/ui/button';
 
 interface Props {
   team: Team & { owner: User };
@@ -36,25 +36,25 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
       renderActions={
         permissions.canUpdateTeam
           ? () => (
-              <>
-                <ActionMessage on={form.recentlySuccessful} className="mr-3">
-                  Saved.
-                </ActionMessage>
+            <>
+              <ActionMessage on={form.recentlySuccessful} className="mr-3">
+                Saved.
+              </ActionMessage>
 
-                <PrimaryButton
-                  className={classNames({ 'opacity-25': form.processing })}
-                  disabled={form.processing}
-                >
-                  Save
-                </PrimaryButton>
-              </>
-            )
+              <Button
+                className={classNames({ 'opacity-25': form.processing })}
+                disabled={form.processing}
+              >
+                Save
+              </Button>
+            </>
+          )
           : undefined
       }
     >
       {/* <!-- Team Owner Information --> */}
       <div className="col-span-6">
-        <InputLabel value="Team Owner" />
+        <Label>Team Owner</Label>
 
         <div className="flex items-center mt-2">
           <img
@@ -76,9 +76,9 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
 
       {/* <!-- Team Name --> */}
       <div className="col-span-6 sm:col-span-4">
-        <InputLabel htmlFor="name" value="Team Name" />
+        <Label htmlFor="name">Team Name</Label>
 
-        <TextInput
+        <Input
           id="name"
           type="text"
           className="mt-1 block w-full"

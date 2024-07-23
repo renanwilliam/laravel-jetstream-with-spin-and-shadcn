@@ -15,9 +15,9 @@ interface Props {
 }
 
 export default function Show({
-  sessions,
-  confirmsTwoFactorAuthentication,
-}: Props) {
+                               sessions,
+                               confirmsTwoFactorAuthentication,
+                             }: Props) {
   const page = useTypedPage();
 
   return (

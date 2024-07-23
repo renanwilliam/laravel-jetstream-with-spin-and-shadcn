@@ -10,10 +10,10 @@ interface Props {
 }
 
 export default function ApiTokenIndex({
-  tokens,
-  availablePermissions,
-  defaultPermissions,
-}: Props) {
+                                        tokens,
+                                        availablePermissions,
+                                        defaultPermissions,
+                                      }: Props) {
   return (
     <AppLayout
       title={'API Tokens'}

@@ -3,27 +3,18 @@ import useTypedPage from '@/Hooks/useTypedPage';
 import ActionMessage from '@/Components/ActionMessage';
 import ActionSection from '@/Components/ActionSection';
 import ConfirmationModal from '@/Components/ConfirmationModal';
-import DangerButton from '@/Components/DangerButton';
 import DialogModal from '@/Components/DialogModal';
 import FormSection from '@/Components/FormSection';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import SecondaryButton from '@/Components/SecondaryButton';
 import SectionBorder from '@/Components/SectionBorder';
-import {
-  JetstreamTeamPermissions,
-  Nullable,
-  Role,
-  Team,
-  TeamInvitation,
-  User,
-} from '@/types';
+import { JetstreamTeamPermissions, Nullable, Role, Team, TeamInvitation, User } from '@/types';
 import { router } from '@inertiajs/core';
 import { useForm } from '@inertiajs/react';
 import classNames from 'classnames';
 import React, { useState } from 'react';
+import { Button } from '@/shadcn/ui/button';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
 
 interface UserMembership extends User {
   membership: {
@@ -41,10 +32,10 @@ interface Props {
 }
 
 export default function TeamMemberManager({
-  team,
-  availableRoles,
-  userPermissions,
-}: Props) {
+                                            team,
+                                            availableRoles,
+                                            userPermissions,
+                                          }: Props) {
   const route = useRoute();
   const addTeamMemberForm = useForm({
     email: '',
@@ -147,14 +138,14 @@ export default function TeamMemberManager({
                   Added.
                 </ActionMessage>
 
-                <PrimaryButton
+                <Button
                   className={classNames({
                     'opacity-25': addTeamMemberForm.processing,
                   })}
                   disabled={addTeamMemberForm.processing}
                 >
                   Add
-                </PrimaryButton>
+                </Button>
               </>
             )}
           >
@@ -167,8 +158,8 @@ export default function TeamMemberManager({
 
             {/* <!-- Member Email --> */}
             <div className="col-span-6 sm:col-span-4">
-              <InputLabel htmlFor="email" value="Email" />
-              <TextInput
+              <Label htmlFor="email">Email</Label>
+              <Input
                 id="email"
                 type="email"
                 className="mt-1 block w-full"
@@ -186,18 +177,19 @@ export default function TeamMemberManager({
             {/* <!-- Role --> */}
             {availableRoles.length > 0 ? (
               <div className="col-span-6 lg:col-span-4">
-                <InputLabel htmlFor="roles" value="Role" />
+                <Label htmlFor="roles">Role</Label>
                 <InputError
                   message={addTeamMemberForm.errors.role}
                   className="mt-2"
                 />
 
-                <div className="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
+                <div
+                  className="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
                   {availableRoles.map((role, i) => (
                     <button
                       type="button"
                       className={classNames(
-                        'relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-600',
+                        'relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-500 dark:focus:border-blue-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600',
                         {
                           'border-t border-gray-200 dark:border-gray-700 focus:border-none rounded-t-none':
                             i > 0,
@@ -280,7 +272,7 @@ export default function TeamMemberManager({
                   className="flex items-center justify-between"
                   key={invitation.id}
                 >
-                  <div className="text-gray-600 dark:text-gray-400">
+                  <div className="text-gray-600 dark:text-gray-400 text-sm">
                     {invitation.email}
                   </div>
 
@@ -380,12 +372,13 @@ export default function TeamMemberManager({
         <DialogModal.Content title={'Manage Role'}></DialogModal.Content>
         {managingRoleFor ? (
           <div>
-            <div className="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
+            <div
+              className="relative z-0 ml-1 mr-1 mt-1 mb-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
               {availableRoles.map((role, i) => (
                 <button
                   type="button"
                   className={classNames(
-                    'relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-600',
+                    'relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-primary dark:focus:border-blue-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600',
                     {
                       'border-t border-gray-200 dark:border-gray-700 focus:border-none rounded-t-none':
                         i > 0,
@@ -442,11 +435,11 @@ export default function TeamMemberManager({
           </div>
         ) : null}
         <DialogModal.Footer>
-          <SecondaryButton onClick={() => setCurrentlyManagingRole(false)}>
+          <Button variant="secondary" onClick={() => setCurrentlyManagingRole(false)}>
             Cancel
-          </SecondaryButton>
+          </Button>
 
-          <PrimaryButton
+          <Button
             onClick={updateRole}
             className={classNames('ml-2', {
               'opacity-25': updateRoleForm.processing,
@@ -454,7 +447,7 @@ export default function TeamMemberManager({
             disabled={updateRoleForm.processing}
           >
             Save
-          </PrimaryButton>
+          </Button>
         </DialogModal.Footer>
       </DialogModal>
 
@@ -467,11 +460,12 @@ export default function TeamMemberManager({
           Are you sure you would like to leave this team?
         </ConfirmationModal.Content>
         <ConfirmationModal.Footer>
-          <SecondaryButton onClick={() => setConfirmingLeavingTeam(false)}>
+          <Button variant="secondary" onClick={() => setConfirmingLeavingTeam(false)}>
             Cancel
-          </SecondaryButton>
+          </Button>
 
-          <DangerButton
+          <Button
+            variant="destructive"
             onClick={leaveTeam}
             className={classNames('ml-2', {
               'opacity-25': leaveTeamForm.processing,
@@ -479,7 +473,7 @@ export default function TeamMemberManager({
             disabled={leaveTeamForm.processing}
           >
             Leave
-          </DangerButton>
+          </Button>
         </ConfirmationModal.Footer>
       </ConfirmationModal>
 
@@ -492,19 +486,19 @@ export default function TeamMemberManager({
           Are you sure you would like to remove this person from the team?
         </ConfirmationModal.Content>
         <ConfirmationModal.Footer>
-          <SecondaryButton onClick={() => setTeamMemberBeingRemoved(null)}>
+          <Button variant="secondary" onClick={() => setTeamMemberBeingRemoved(null)}>
             Cancel
-          </SecondaryButton>
+          </Button>
 
-          <DangerButton
-            onClick={removeTeamMember}
-            className={classNames('ml-2', {
-              'opacity-25': removeTeamMemberForm.processing,
-            })}
-            disabled={removeTeamMemberForm.processing}
+          <Button variant="destructive"
+                  onClick={removeTeamMember}
+                  className={classNames('ml-2', {
+                    'opacity-25': removeTeamMemberForm.processing,
+                  })}
+                  disabled={removeTeamMemberForm.processing}
           >
             Remove
-          </DangerButton>
+          </Button>
         </ConfirmationModal.Footer>
       </ConfirmationModal>
     </div>

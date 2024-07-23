@@ -8,6 +8,7 @@ services:
       - "80:80"
       - "443:443"
       - "5173:5173"
+      - "8080:8080"
     volumes:
       # Add Docker as a mounted volume, so that Traefik can read the labels of other services
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -29,10 +30,10 @@ services:
       - development
     depends_on:
       - traefik
-      - mariadb
+      - mysql
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.laravel.rule=HostRegexp(`jetstream-react-app.dev.test`)"
+      - "traefik.http.routers.laravel.rule=HostRegexp(`erp4success.dev.test`)"
       - "traefik.http.routers.laravel.entrypoints=websecure"
       - "traefik.http.routers.laravel.tls=true"
       - "traefik.http.services.laravel.loadbalancer.server.port=8080"
@@ -59,32 +60,37 @@ services:
       - "traefik.http.services.vite.loadbalancer.server.port=5173"
       - "traefik.http.services.vite.loadbalancer.server.scheme=https"
 
-  mariadb:
+  mysql:
+    build:
+      dockerfile: docker/mysql/Dockerfile
+      args:
+        - MYSQL_VERSION=${SPIN_MYSQL_VERSION}
     networks:
       - development
     volumes:
-      - ./.infrastructure/volume_data/mariadb/database_data/:/var/lib/mysql
+      - ./.infrastructure/volume_data/mysql/database_data/:/var/lib/mysql
     environment:
-        MYSQL_ROOT_PASSWORD: "rootpassword"
-        MYSQL_DATABASE: "laravel"
-        MYSQL_USER: "mysqluser"
-        MYSQL_PASSWORD: "mysqlpassword"
+      MYSQL_DATABASE: ${SPIN_MYSQL_DATABASE}
+      MYSQL_USER: ${SPIN_MYSQL_USER}
+      MYSQL_PASSWORD: ${SPIN_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${SPIN_MYSQL_ROOT_PASSWORD}
+      TZ: ${SPIN_MYSQL_TIMEZONE}
     ports:
-      - "3306:3306"
+      - "${SPIN_MYSQL_PORT}:3306"
 
   mailpit:
-      image: axllent/mailpit
-      networks:
-        - development
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.mailpit.rule=Host(`mailpit.dev.test`)"
-        - "traefik.http.routers.mailpit.entrypoints=websecure"
-        - "traefik.http.routers.mailpit.tls=true"
-        - "traefik.http.services.mailpit.loadbalancer.server.port=8025"
-        - "traefik.http.services.mailpit.loadbalancer.server.scheme=http"
-      depends_on:
-        - traefik
+    image: axllent/mailpit
+    networks:
+      - development
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mailpit.rule=Host(`mailpit.dev.test`)"
+      - "traefik.http.routers.mailpit.entrypoints=websecure"
+      - "traefik.http.routers.mailpit.tls=true"
+      - "traefik.http.services.mailpit.loadbalancer.server.port=8025"
+      - "traefik.http.services.mailpit.loadbalancer.server.scheme=http"
+    depends_on:
+      - traefik
 
 networks:
   development:

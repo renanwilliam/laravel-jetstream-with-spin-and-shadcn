@@ -5,21 +5,19 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import ActionSection from '@/Components/ActionSection';
 import ConfirmsPassword from '@/Components/ConfirmsPassword';
-import DangerButton from '@/Components/DangerButton';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
 import useTypedPage from '@/Hooks/useTypedPage';
+import { Button } from '@/shadcn/ui/button';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
 
 interface Props {
   requiresConfirmation: boolean;
 }
 
 export default function TwoFactorAuthenticationForm({
-  requiresConfirmation,
-}: Props) {
+                                                      requiresConfirmation,
+                                                    }: Props) {
   const page = useTypedPage();
   const [enabling, setEnabling] = useState(false);
   const [disabling, setDisabling] = useState(false);
@@ -181,9 +179,8 @@ export default function TwoFactorAuthenticationForm({
 
               {confirming && (
                 <div className="mt-4">
-                  <InputLabel htmlFor="code" value="Code" />
-
-                  <TextInput
+                  <Label htmlFor="code">Code</Label>
+                  <Input
                     id="code"
                     type="text"
                     name="code"
@@ -216,7 +213,8 @@ export default function TwoFactorAuthenticationForm({
                 </p>
               </div>
 
-              <div className="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 dark:bg-gray-900 rounded-lg">
+              <div
+                className="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 dark:bg-gray-900 rounded-lg">
                 {recoveryCodes.map(code => (
                   <div key={code}>{code}</div>
                 ))}
@@ -231,59 +229,61 @@ export default function TwoFactorAuthenticationForm({
           <div>
             {confirming ? (
               <ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
-                <PrimaryButton
+                <Button
                   className={classNames('mr-3', { 'opacity-25': enabling })}
                   disabled={enabling}
                 >
                   Confirm
-                </PrimaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length > 0 && !confirming ? (
               <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-                <SecondaryButton className="mr-3">
+                <Button className="mr-3" variant="secondary">
                   Regenerate Recovery Codes
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length === 0 && !confirming ? (
               <ConfirmsPassword onConfirm={showRecoveryCodes}>
-                <SecondaryButton className="mr-3">
+                <Button className="mr-3" variant="secondary">
                   Show Recovery Codes
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
 
             {confirming ? (
               <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                <SecondaryButton
+                <Button
                   className={classNames('mr-3', { 'opacity-25': disabling })}
                   disabled={disabling}
+                  variant="secondary"
                 >
                   Cancel
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : (
               <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                <DangerButton
+                <Button
+                  variant="destructive"
                   className={classNames({ 'opacity-25': disabling })}
                   disabled={disabling}
                 >
                   Disable
-                </DangerButton>
+                </Button>
               </ConfirmsPassword>
             )}
           </div>
         ) : (
           <div>
             <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-              <PrimaryButton
+              <Button
                 type="button"
                 className={classNames({ 'opacity-25': enabling })}
                 disabled={enabling}
               >
                 Enable
-              </PrimaryButton>
+              </Button>
             </ConfirmsPassword>
           </div>
         )}

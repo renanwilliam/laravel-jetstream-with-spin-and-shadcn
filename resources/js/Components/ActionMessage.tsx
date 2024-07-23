@@ -7,10 +7,10 @@ interface Props {
 }
 
 export default function ActionMessage({
-  on,
-  className,
-  children,
-}: PropsWithChildren<Props>) {
+                                        on,
+                                        className,
+                                        children,
+                                      }: PropsWithChildren<Props>) {
   return (
     <div className={className}>
       <Transition

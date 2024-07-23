@@ -7,10 +7,10 @@ interface Props {
 }
 
 export default function ActionSection({
-  title,
-  description,
-  children,
-}: PropsWithChildren<Props>) {
+                                        title,
+                                        description,
+                                        children,
+                                      }: PropsWithChildren<Props>) {
   return (
     <div className="md:grid md:grid-cols-3 md:gap-6">
       <SectionTitle title={title} description={description} />

@@ -1,13 +1,12 @@
-import { Link, useForm, Head } from '@inertiajs/react';
-import classNames from 'classnames';
+import { Head, Link, useForm } from '@inertiajs/react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
-import Checkbox from '@/Components/Checkbox';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shadcn/ui/card';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
+import { Button } from '@/shadcn/ui/button';
 
 interface Props {
   canResetPassword: boolean;
@@ -31,86 +30,67 @@ export default function Login({ canResetPassword, status }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="login" />
-
-      {status && (
-        <div className="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-          {status}
-        </div>
-      )}
+      <Head title="Log in" />
 
       <form onSubmit={onSubmit}>
-        <div>
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <TextInput
-            id="email"
-            type="email"
-            className="mt-1 block w-full"
-            value={form.data.email}
-            onChange={e => form.setData('email', e.currentTarget.value)}
-            required
-            autoFocus
-          />
-          <InputError className="mt-2" message={form.errors.email} />
-        </div>
+        <Card className="mx-auto max-w-sm">
+          <CardHeader>
+            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardDescription>
+              Enter your email below to login to your account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {status && (
+              <div className="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                {status}
+              </div>
+            )}
 
-        <div className="mt-4">
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <TextInput
-            id="password"
-            type="password"
-            className="mt-1 block w-full"
-            value={form.data.password}
-            onChange={e => form.setData('password', e.currentTarget.value)}
-            required
-            autoComplete="current-password"
-          />
-          <InputError className="mt-2" message={form.errors.password} />
-        </div>
-
-        <div className="mt-4">
-          <label className="flex items-center">
-            <Checkbox
-              name="remember"
-              checked={form.data.remember === 'on'}
-              onChange={e =>
-                form.setData('remember', e.currentTarget.checked ? 'on' : '')
-              }
-            />
-            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-              Remember me
-            </span>
-          </label>
-        </div>
-
-        <div className="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between md:space-y-0 mt-4">
-          {canResetPassword && (
-            <div>
-              <Link
-                href={route('password.request')}
-                className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-              >
-                Forgot your password?
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  value={form.data.email}
+                  onChange={e => form.setData('email', e.currentTarget.value)}
+                  required
+                />
+                <InputError className="mt-2" message={form.errors.email} />
+              </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <Link
+                    href={route('password.request')}
+                    className="ml-auto inline-block text-sm underline"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  value={form.data.password}
+                  onChange={e => form.setData('password', e.currentTarget.value)}
+                  required
+                  autoComplete="current-password"
+                />
+                <InputError className="mt-2" message={form.errors.password} /></div>
+              <Button type="submit" className="w-full">
+                Login
+              </Button>
+            </div>
+            <div className="mt-4 text-center text-sm">
+              Don&apos;t have an account?{' '}
+              <Link href="/register" className="underline">
+                Sign up
               </Link>
             </div>
-          )}
-
-          <div className="flex items-center justify-end">
-            <Link
-              href={route('register')}
-              className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-            >
-              Need an account?
-            </Link>
-
-            <PrimaryButton
-              className={classNames('ml-4', { 'opacity-25': form.processing })}
-              disabled={form.processing}
-            >
-              Log in
-            </PrimaryButton>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </form>
     </AuthenticationCard>
   );

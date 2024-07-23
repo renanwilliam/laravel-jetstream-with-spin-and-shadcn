@@ -26,9 +26,9 @@ export interface User {
 export interface Auth {
   user: Nullable<
     User & {
-      all_teams?: Team[];
-      current_team?: Team;
-    }
+    all_teams?: Team[];
+    current_team?: Team;
+  }
   >;
 }
 

@@ -1,8 +1,7 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
-import { Head } from '@inertiajs/react';
 
 interface Props {
   canLogin: boolean;
@@ -12,11 +11,11 @@ interface Props {
 }
 
 export default function Welcome({
-  canLogin,
-  canRegister,
-  laravelVersion,
-  phpVersion,
-}: Props) {
+                                  canLogin,
+                                  canRegister,
+                                  laravelVersion,
+                                  phpVersion,
+                                }: Props) {
   const route = useRoute();
   const page = useTypedPage();
 
@@ -24,7 +23,8 @@ export default function Welcome({
     <>
       <Head title="Welcome" />
 
-      <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+      <div
+        className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         {canLogin ? (
           <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
             {page.props.auth.user ? (
@@ -216,7 +216,8 @@ export default function Welcome({
                 </svg>
               </a>
 
-              <div className="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+              <div
+                className="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                 <div>
                   <div className="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
                     <svg

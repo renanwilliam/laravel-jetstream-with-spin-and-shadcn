@@ -1,27 +1,32 @@
 import { router } from '@inertiajs/core';
-import { Link, Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import classNames from 'classnames';
 import React, { PropsWithChildren, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
-import ApplicationMark from '@/Components/ApplicationMark';
 import Banner from '@/Components/Banner';
 import Dropdown from '@/Components/Dropdown';
 import DropdownLink from '@/Components/DropdownLink';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Team } from '@/types';
+import { ModeToggle } from '@/Components/ModeToggle';
+import { useTheme } from '@/Components/ThemeProvider';
+import ApplicationMark from '@/Components/ApplicationMark';
 
 interface Props {
   title: string;
+
   renderHeader?(): JSX.Element;
 }
 
 export default function AppLayout({
-  title,
-  renderHeader,
-  children,
-}: PropsWithChildren<Props>) {
+                                    title,
+                                    renderHeader,
+                                    children,
+                                  }: PropsWithChildren<Props>) {
+  const { theme } = useTheme();
+
   const page = useTypedPage();
   const route = useRoute();
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -45,6 +50,9 @@ export default function AppLayout({
     router.post(route('logout'));
   }
 
+  const defaultThemeIsDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const LogoComponent = ApplicationMark
+
   return (
     <div>
       <Head title={title} />
@@ -60,7 +68,7 @@ export default function AppLayout({
                 {/* <!-- Logo --> */}
                 <div className="flex-shrink-0 flex items-center">
                   <Link href={route('dashboard')}>
-                    <ApplicationMark className="block h-9 w-auto" />
+                    <LogoComponent className="block h-9 w-auto" />
                   </Link>
                 </div>
 
@@ -145,18 +153,18 @@ export default function AppLayout({
                                   <div className="flex items-center">
                                     {team.id ==
                                       page.props.auth.user?.current_team_id && (
-                                      <svg
-                                        className="mr-2 h-5 w-5 text-green-400"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                      </svg>
-                                    )}
+                                        <svg
+                                          className="mr-2 h-5 w-5 text-green-400"
+                                          fill="none"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="2"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                      )}
                                     <div>{team.name}</div>
                                   </div>
                                 </DropdownLink>
@@ -176,7 +184,8 @@ export default function AppLayout({
                     width="48"
                     renderTrigger={() =>
                       page.props.jetstream.managesProfilePhotos ? (
-                        <button className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                        <button
+                          className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                           <img
                             className="h-8 w-8 rounded-full object-cover"
                             src={page.props.auth.user?.profile_photo_url}
@@ -230,6 +239,9 @@ export default function AppLayout({
                       <DropdownLink as="button">Log Out</DropdownLink>
                     </form>
                   </Dropdown>
+                </div>
+                <div className="ml-3 relative">
+                  <ModeToggle />
                 </div>
               </div>
 
@@ -374,18 +386,18 @@ export default function AppLayout({
                           <div className="flex items-center">
                             {team.id ==
                               page.props.auth.user?.current_team_id && (
-                              <svg
-                                className="mr-2 h-5 w-5 text-green-400"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                              </svg>
-                            )}
+                                <svg
+                                  className="mr-2 h-5 w-5 text-green-400"
+                                  fill="none"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                              )}
                             <div>{team.name}</div>
                           </div>
                         </ResponsiveNavLink>

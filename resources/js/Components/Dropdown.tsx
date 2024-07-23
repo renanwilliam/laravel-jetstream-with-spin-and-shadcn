@@ -6,16 +6,17 @@ interface Props {
   align?: string;
   width?: string | number;
   contentClasses?: string;
+
   renderTrigger(): JSX.Element;
 }
 
 export default function Dropdown({
-  align = 'right',
-  width = '48',
-  contentClasses = 'py-1 bg-white dark:bg-gray-700',
-  renderTrigger,
-  children,
-}: PropsWithChildren<Props>) {
+                                   align = 'right',
+                                   width = '48',
+                                   contentClasses = 'py-1 bg-white dark:bg-gray-700',
+                                   renderTrigger,
+                                   children,
+                                 }: PropsWithChildren<Props>) {
   const [open, setOpen] = useState(false);
 
   const widthClass = {

@@ -2,13 +2,14 @@ import React, { PropsWithChildren } from 'react';
 import Modal, { ModalProps } from '@/Components/Modal';
 
 ConfirmationModal.Content = function ConfirmationModalContent({
-  title,
-  children,
-}: PropsWithChildren<{ title: string }>) {
+                                                                title,
+                                                                children,
+                                                              }: PropsWithChildren<{ title: string }>) {
   return (
     <div className="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
       <div className="sm:flex sm:items-start">
-        <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+        <div
+          className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
           <svg
             className="h-6 w-6 text-red-600 dark:text-red-400"
             stroke="currentColor"
@@ -39,8 +40,8 @@ ConfirmationModal.Content = function ConfirmationModalContent({
 };
 
 ConfirmationModal.Footer = function ConfirmationModalFooter({
-  children,
-}: PropsWithChildren<Record<string, unknown>>) {
+                                                              children,
+                                                            }: PropsWithChildren<Record<string, unknown>>) {
   return (
     <div className="px-6 py-4 bg-gray-100 dark:bg-gray-800 text-right">
       {children}
@@ -49,8 +50,8 @@ ConfirmationModal.Footer = function ConfirmationModalFooter({
 };
 
 export default function ConfirmationModal({
-  children,
-  ...props
-}: PropsWithChildren<ModalProps>) {
+                                            children,
+                                            ...props
+                                          }: PropsWithChildren<ModalProps>) {
   return <Modal {...props}>{children}</Modal>;
 }

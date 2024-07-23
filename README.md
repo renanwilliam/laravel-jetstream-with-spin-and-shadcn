@@ -1,8 +1,10 @@
 # Laravel Jetstream with Inertia.js, React, shadcn Components, and ServerSideUp Spin
 
-This repository provides an example of integrating Laravel Jetstream with Inertia.js and React, utilizing shadcn components for the front end, and leveraging ServerSideUp Spin for infrastructure management.
+This repository provides an example of integrating Laravel Jetstream with Inertia.js and React, utilizing shadcn
+components for the front end, and leveraging ServerSideUp Spin for infrastructure management.
 
 ## Features
+
 - **Laravel Jetstream**: A beautifully designed application scaffolding for Laravel.
 - **Inertia.js**: A modern stack that makes it easy to build single-page apps using Laravel and React.
 - **React**: A JavaScript library for building user interfaces.
@@ -12,7 +14,9 @@ This repository provides an example of integrating Laravel Jetstream with Inerti
 ## Getting Started
 
 ### Prerequisites
+
 Ensure you have the following installed:
+
 - Docker
 - Node.js and npm
 
@@ -40,10 +44,13 @@ Ensure you have the following installed:
    ```bash
    spin run node node_modules/.bin/vite --host
    ```
-    If you have Node.js and NPM installed, you can use the convenience script `npm run dev-docker` 
+   If you have Node.js and NPM installed, you can use the convenience script `npm run dev-docker`
 
 ### PHP CLI Interaction
-To interact with the PHP CLI for running \`composer\` or \`php artisan\` commands, start a bash session in a new PHP container:
+
+To interact with the PHP CLI for running \`composer\` or \`php artisan\` commands, start a bash session in a new PHP
+container:
+
 ```bash
 spin run -it php bash
 ```
@@ -57,7 +64,9 @@ spin run -it php bash
 - **shadcn Components**: [shadcn Documentation](https://shadcn.dev/)
 
 ## Contributing
+
 Feel free to submit issues and pull requests to contribute to the project. Contributions are welcome!
 
 ## License
+
 This project is open-sourced under the [MIT license](LICENSE).

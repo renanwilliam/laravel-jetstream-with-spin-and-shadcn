@@ -6,10 +6,10 @@ interface Props {
 }
 
 export default function InputLabel({
-  value,
-  htmlFor,
-  children,
-}: PropsWithChildren<Props>) {
+                                     value,
+                                     htmlFor,
+                                     children,
+                                   }: PropsWithChildren<Props>) {
   return (
     <label
       className="block font-medium text-sm text-gray-700 dark:text-gray-300"

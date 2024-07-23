@@ -1,17 +1,16 @@
 import { router } from '@inertiajs/core';
 import { Link, useForm } from '@inertiajs/react';
-import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import ActionMessage from '@/Components/ActionMessage';
 import FormSection from '@/Components/FormSection';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import SecondaryButton from '@/Components/SecondaryButton';
 import { User } from '@/types';
 import useTypedPage from '@/Hooks/useTypedPage';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
+import { Button } from '@/shadcn/ui/button';
 
 interface Props {
   user: User;
@@ -88,12 +87,7 @@ export default function UpdateProfileInformationForm({ user }: Props) {
             Saved.
           </ActionMessage>
 
-          <PrimaryButton
-            className={classNames({ 'opacity-25': form.processing })}
-            disabled={form.processing}
-          >
-            Save
-          </PrimaryButton>
+          <Button disabled={form.processing}>Save</Button>
         </>
       )}
     >
@@ -134,22 +128,24 @@ export default function UpdateProfileInformationForm({ user }: Props) {
             </div>
           )}
 
-          <SecondaryButton
-            className="mt-2 mr-2"
+          <Button
+            variant="secondary"
+            className="mt-2 mr-2 border"
             type="button"
             onClick={selectNewPhoto}
           >
             Select A New Photo
-          </SecondaryButton>
+          </Button>
 
           {user.profile_photo_path ? (
-            <SecondaryButton
+            <Button
+              variant="secondary"
               type="button"
               className="mt-2"
               onClick={deletePhoto}
             >
               Remove Photo
-            </SecondaryButton>
+            </Button>
           ) : null}
 
           <InputError message={form.errors.photo} className="mt-2" />
@@ -158,13 +154,14 @@ export default function UpdateProfileInformationForm({ user }: Props) {
 
       {/* <!-- Name --> */}
       <div className="col-span-6 sm:col-span-4">
-        <InputLabel htmlFor="name" value="Name" />
-        <TextInput
+        <Label htmlFor="name">Name</Label>
+
+        <Input
           id="name"
-          type="text"
           className="mt-1 block w-full"
           value={form.data.name}
           onChange={e => form.setData('name', e.currentTarget.value)}
+          required
           autoComplete="name"
         />
         <InputError message={form.errors.name} className="mt-2" />
@@ -172,13 +169,16 @@ export default function UpdateProfileInformationForm({ user }: Props) {
 
       {/* <!-- Email --> */}
       <div className="col-span-6 sm:col-span-4">
-        <InputLabel htmlFor="email" value="Email" />
-        <TextInput
+        <Label htmlFor="email">Email</Label>
+
+        <Input
           id="email"
           type="email"
           className="mt-1 block w-full"
           value={form.data.email}
           onChange={e => form.setData('email', e.currentTarget.value)}
+          required
+          autoComplete="username"
         />
         <InputError message={form.errors.email} className="mt-2" />
 
@@ -193,7 +193,6 @@ export default function UpdateProfileInformationForm({ user }: Props) {
                 as="button"
                 className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                 onClick={e => {
-                  e.preventDefault();
                   setVerificationLinkSent(true);
                 }}
               >

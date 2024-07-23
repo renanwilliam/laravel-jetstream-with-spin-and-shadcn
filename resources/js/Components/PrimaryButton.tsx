@@ -7,9 +7,9 @@ type Props = React.DetailedHTMLProps<
 >;
 
 export default function PrimaryButton({
-  children,
-  ...props
-}: PropsWithChildren<Props>) {
+                                        children,
+                                        ...props
+                                      }: PropsWithChildren<Props>) {
   return (
     <button
       {...props}

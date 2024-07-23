@@ -5,17 +5,19 @@ import SectionTitle from '@/Components/SectionTitle';
 interface Props {
   title: string;
   description: string;
+
   renderActions?(): JSX.Element;
+
   onSubmit(): void;
 }
 
 export default function FormSection({
-  onSubmit,
-  renderActions,
-  title,
-  description,
-  children,
-}: PropsWithChildren<Props>) {
+                                      onSubmit,
+                                      renderActions,
+                                      title,
+                                      description,
+                                      children,
+                                    }: PropsWithChildren<Props>) {
   const hasActions = !!renderActions;
 
   return (
@@ -41,7 +43,8 @@ export default function FormSection({
           </div>
 
           {hasActions && (
-            <div className="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
+            <div
+              className="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
               {renderActions?.()}
             </div>
           )}
